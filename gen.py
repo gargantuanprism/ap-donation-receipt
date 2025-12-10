@@ -54,14 +54,20 @@ def get_user_data(row, args):
 
   donation_date = dateutil.parser.parse(row[cols['date']])
 
-  return {
+  data = {
     'donation_date': donation_date.strftime('%Y/%m/%d'),
     'donation_amount': donation_amount,
     'first_name': row[cols['first_name']].title(),
     'last_name': row[cols['last_name']].title(),
     'donor_email': row[cols['email']],
-    'donation_desc': args.donation_desc
+    'donation_desc': '',
+    'nc_value': ''
   }
+
+  if args.donation_desc:
+    data['donation_desc'] = args.donation_desc
+
+  return data
 
 def write_files(tpl_data, args):
   date = tpl_data['donation_date'].replace('/', '-')
@@ -74,6 +80,9 @@ def write_files(tpl_data, args):
   if args.pdf:
     os.system(f'pandoc out/{outfile_basename}.md -o out/{outfile_basename}.pdf')
 
+  if args.html:
+    os.system(f'pandoc out/{outfile_basename}.md -o out/{outfile_basename}.html')
+
   return f'out/{outfile_basename}'
 
 if __name__ == '__main__':
@@ -83,6 +92,13 @@ if __name__ == '__main__':
   parser.add_argument('--zeffy', action='store_true')
   parser.add_argument('--donation-desc')
   parser.add_argument('--pdf', action='store_true')
+  parser.add_argument('--html', action='store_true')
+  parser.add_argument('--first-name')
+  parser.add_argument('--last-name')
+  parser.add_argument('--email')
+  parser.add_argument('--amount', type=float)
+  parser.add_argument('--date')
+  parser.add_argument('--nc-value', type=float)
   args = parser.parse_args()
 
   with open('template.md', 'r') as f:
@@ -114,4 +130,22 @@ if __name__ == '__main__':
           tpl_data = BASE_VALUES | user_data
           outfile_basename = write_files(tpl_data, args)
           print(f'{tpl_data["donor_email"]} -> {outfile_basename}')
+
+      # manual
+      else:
+        args.zeffy = True
+
+        row = [
+          args.date,
+          args.amount,
+          None,
+          None,
+          None,
+          args.first_name,
+          args.last_name,
+          args.email
+        ]
+
+        tpl_data = BASE_VALUES | get_user_data(row, args)
+        print(tpl_data)
 

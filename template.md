@@ -5,6 +5,7 @@ geometry: margin=1in
 \pagenumbering{gobble}
 
 ![]($org_logo){ height=50px }
+![]($sponsor_logo){ height=50px }
 
 $org_name  
 $org_addr  
@@ -24,7 +25,7 @@ Your support ensures that we can continue to provide direct, non-transactional a
 - Community grocery distribution (combating food insecurity through collective action, not charity)
 - Political education programs (building consciousness and tools for systemic change)
 
-If this is a cash-only donation, you may make a deduction on your tax return. See [https://www.irs.gov/publications/p526](https://www.irs.gov/publications/p526) for more information.
+For this donation (cash or non-cash), you may make a deduction on your tax return. See [https://www.irs.gov/publications/p526](https://www.irs.gov/publications/p526) for more information.
 
 # Official receipt details for your records
 
@@ -33,6 +34,7 @@ If this is a cash-only donation, you may make a deduction on your tax return. Se
 **Date of contribution:** $donation_date  
 **Amount of cash contribution:** $donation_amount  
 **Description of non-cash contribution:** $donation_desc  
+**Value of non-cash contribution:** $nc_value  
 
 # IRS disclosure statement
 
