@@ -1,0 +1,6 @@
+out/*.pdf
+out/*.md
+csv/*.csv
+img/*.png
+.env
+
